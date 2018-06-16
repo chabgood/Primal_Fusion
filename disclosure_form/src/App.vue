@@ -1,6 +1,6 @@
 <template>
   <div b-col cols="">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
       <b-form-group id="name_label">
         <b-form-input id="name"
                       type="text"
@@ -30,7 +30,6 @@
         <b-form-input id="apt_number"
                       type="text"
                       v-model="form.apt_number"
-                      required
                       placeholder="Apt#">
         </b-form-input>
       </b-form-group>
@@ -40,11 +39,11 @@
                       type="text"
                       v-model="form.city_state_zip"
                       required
-                      placeholder="Dob">
+                      placeholder="City/State/Zip">
         </b-form-input>
       </b-form-group>
       <b-form-group id="email_label">
-        <b-form-input id="enail"
+        <b-form-input id="email"
                       type="email"
                       v-model="form.email"
                       required
@@ -66,6 +65,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import qs from 'qs'
+// axios.defaults.withCredentials = true
 export default {
   data () {
     return {
@@ -77,22 +79,34 @@ export default {
         city_state_zip: '',
         email: '',
         home_phone: ''
-      },
-      show: true
+      }
     }
   },
   methods: {
     onSubmit (evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.form))
+      var theThis = this
+      var name = theThis.form['name']
+      if (navigator.onLine) {
+        // alert(navigator.onLine)
+        axios.post('http://localhost:3000/disclosure_forms', qs.stringify(this.form), 'json')
+          .then(function (response) {
+            localStorage.removeItem(name)
+            theThis.onReset()
+          })
+      } else {
+        localStorage.setItem(name, qs.stringify(this.form))
+        alert('You are offline, therefore setting data locally')
+      }
     },
     onReset (evt) {
-      evt.preventDefault()
       /* Reset our form values */
       this.form.email = ''
       this.form.name = ''
-      this.form.food = null
-      this.form.checked = []
+      this.form.street = ''
+      this.form.apt_number = ''
+      this.form.dob = ''
+      this.form.home_phone = ''
+      this.form.city_state_zip = ''
       /* Trick to reset/clear native browser form validation state */
       this.show = false
       this.$nextTick(() => { this.show = true })
