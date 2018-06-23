@@ -32,9 +32,15 @@ myself in an appropriate manner.
     <div>
       <b-row>
         <b-col cols="2">
-          <b-form-input type="text" size="2" placeholder="➔ INITIALS" required/>
+          <b-form-input type="text" size="2" v-model="form.pricingandpayment" placeholder="➔ INITIALS" required/>
         </b-col>
       </b-row>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['form']
+}
+</script>

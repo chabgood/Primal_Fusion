@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="position: relative; margin: 100px auto 0 auto; width 635px;">
     <b-row>
       <div>
         <img src="./assets/primal_fusion_logo.jpeg">
@@ -66,13 +66,33 @@
                         placeholder="Home Phone/Cell">
           </b-form-input>
         </b-form-group>
+        <b-form-group id="emergency_contact_name_label">
+          <b-row>
+          <b-col cols="5">
+            <b-form-input id="emergency_contact_name"
+                          type="text"
+                          v-model="form.emergency_contact_name"
+                          required
+                          placeholder="Emergency Contact(Name)">
+            </b-form-input>
+          </b-col>
+          <b-col cols="5">
+            <b-form-input id="emergency_contact_phone"
+                          type="text"
+                          v-model="form.emergency_contact_phone"
+                          required
+                          placeholder="Emergency Contact(Phone)">
+            </b-form-input>
+          </b-col>
+          </b-row>
+        </b-form-group>
         <div>
       </div>
-      <whatisnst :form="form"></whatisnst>
+      <whatisnst :form="form" ></whatisnst>
       <br />
-      <participant :form="form" :creds="creds"></participant>
+      <participant :form="form" :creds="creds" ></participant>
       <br  />
-      <pricingandpayment :form="form"></pricingandpayment>
+      <pricingandpayment :form="form" ></pricingandpayment>
       <br />
       <finalagreement :form="form" ></finalagreement>
       <br>
@@ -104,7 +124,13 @@ export default {
         apt_number: '',
         city_state_zip: '',
         email: '',
-        home_phone: ''
+        home_phone: '',
+        whatisnst: '',
+        participant: '',
+        pricingandpayment: '',
+        finalagreement: '',
+        emergency_contact_name: '',
+        emergency_contact_phone: ''
       }
     }
   },
@@ -116,16 +142,15 @@ export default {
   },
   methods: {
     onSubmit (evt) {
-      let theThis = this
-      let name = theThis.form['name']
+      let name = this.form['name']
       // let doc  = jsPDF.new('p', 'pt')
 
       if (navigator.onLine) {
-        // alert(navigator.onLine)
         axios.post('http://localhost:3000/disclosure_forms', qs.stringify(this.form), 'json')
           .then(function (response) {
             localStorage.removeItem(name)
-            theThis.onReset()
+            evt.target.reset()
+            // theThis.onReset()
           })
       } else {
         localStorage.setItem(name, qs.stringify(this.form))
@@ -141,8 +166,12 @@ export default {
       this.form.dob = ''
       this.form.home_phone = ''
       this.form.city_state_zip = ''
-      this.form.nst = ''
+      this.form.whatisnst = ''
       this.form.participant = ''
+      this.form.pricingandpayment = ''
+      this.form.finalagreement = ''
+      this.form.emergency_contact_name = ''
+      this.form.emergency_contact_phone = ''
       /* Trick to reset/clear native browser form validation state */
       this.show = false
       this.$nextTick(() => { this.show = true })

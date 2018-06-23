@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="mx-auto" style="width: 400px;">
       What is neurosomatic therapy?
     </div>
     <br />
@@ -34,7 +34,7 @@
     <div>
       <b-row>
         <b-col cols="2">
-          <b-form-input type="text" size="1" v-model="form.nst" placeholder="➔ INITIALS" required/>
+          <b-form-input type="text" size="1" v-model="form.whatisnst" placeholder="➔ INITIALS" required/>
         </b-col>
       </b-row>
     </div>

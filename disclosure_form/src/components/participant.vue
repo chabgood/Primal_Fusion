@@ -26,7 +26,7 @@ am free to stop at any point, if I desire.
     <div>
       <b-row>
         <b-col cols="4">
-          I, <b-form-input type="text" size="2" placeholder="➔ INITIALS" required/>
+          I, <b-form-input type="text" size="2" placeholder="Name" required/>
         </b-col>
       </b-row>
       consent to participate in a neurosomatic therapy session with my practitioner Aleksandr Rybchinskiy {{ creds }}

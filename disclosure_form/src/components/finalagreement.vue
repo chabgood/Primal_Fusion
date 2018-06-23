@@ -29,7 +29,7 @@ time.
     <div>
       <b-row>
         <b-col cols="4">
-          <b-form-input type="text" size="2" placeholder="Signature" required/>
+          <b-form-input type="text" size="2" v-model="form.finalagreement" placeholder="Signature" required/>
         </b-col>
       </b-row>
     </div>
@@ -39,6 +39,7 @@ time.
 
 <script>
 export default {
+  props: ['form']
 }
 </script>
 
